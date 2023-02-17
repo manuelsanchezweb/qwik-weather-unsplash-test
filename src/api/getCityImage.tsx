@@ -9,7 +9,7 @@ export async function getCityImage(
   //   }`
   // );
   const resp = await fetch(
-    `https://api.unsplash.com/photos/random?query=${cityName}&client_id=${
+    `https://api.unsplash.com/photos/random?query=${cityName}&orientation=landscape&client_id=${
       import.meta.env.VITE_UNSPLASH
     }`,
     {
@@ -17,6 +17,6 @@ export async function getCityImage(
     }
   );
   const json = await resp.json();
-  // console.log(json);
+  console.log(json);
   return json;
 }

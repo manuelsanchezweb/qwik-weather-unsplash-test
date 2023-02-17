@@ -133,7 +133,12 @@ export default component$(() => {
           return (
             <figure>
               <img class="weather-city" src={image.urls.raw} alt="" />
-              <figcaption>copyright from...</figcaption>
+              <figcaption>
+                copyright from...{" "}
+                <a target="_blank" href={image.user.social.portfolio_url}>
+                  {image.user.username}
+                </a>
+              </figcaption>
             </figure>
           );
         }}
@@ -147,7 +152,55 @@ export const head: DocumentHead = {
   meta: [
     {
       name: "description",
-      content: "Qwik site description",
+      content:
+        "Con esta aplicación podrás ver en tiempo real cuál es el tiempo de la ciudad que quieras.",
+    },
+    {
+      name: "keywords",
+      content:
+        "aplicación del tiempo, pronósticos precisos, ubicación actual, ciudades del mundo, planificar tu día, Qwik",
+    },
+    {
+      name: "author",
+      content: "Manuel Sanchez",
+    },
+    {
+      property: "og:title",
+      content: "☀️ Aplicación del tiempo con Qwik",
+    },
+    {
+      property: "og:description",
+      content:
+        "Qwik es una aplicación del tiempo que te ofrece pronósticos precisos y actualizados para tu ubicación actual y otras ciudades del mundo. ¡Descubre cómo Qwik puede ayudarte a planificar tu día de manera efectiva!",
+    },
+    {
+      property: "og:image",
+      content: "https://source.unsplash.com/random/800x600", // replace with actual image URL from Unsplash
+    },
+    {
+      property: "og:url",
+      content: "https://example.com/", // replace with actual URL of the Qwik site
+    },
+    {
+      name: "twitter:card",
+      content: "summary_large_image",
+    },
+    {
+      name: "twitter:site",
+      content: "@manuelsandoble", // replace with your Twitter handle
+    },
+    {
+      name: "twitter:title",
+      content: "☀️ Aplicación del tiempo con Qwik",
+    },
+    {
+      name: "twitter:description",
+      content:
+        "Con esta aplicación podrás ver en tiempo real cuál es el tiempo de la ciudad que quieras.",
+    },
+    {
+      name: "twitter:image",
+      content: "https://source.unsplash.com/random/800x600", // replace with actual image URL from Unsplash
     },
   ],
 };
