@@ -1,5 +1,3 @@
-import { VITE_UNSPLASH } from "~/secret/fake";
-
 export async function getCityImage(
   cityName: string,
   controller?: AbortController
@@ -11,7 +9,9 @@ export async function getCityImage(
   //   }`
   // );
   const resp = await fetch(
-    `https://api.unsplash.com/photos/random?query=${cityName}&client_id=${VITE_UNSPLASH}`,
+    `https://api.unsplash.com/photos/random?query=${cityName}&client_id=${
+      import.meta.env.VITE_UNSPLASH
+    }`,
     {
       signal: controller?.signal,
     }
