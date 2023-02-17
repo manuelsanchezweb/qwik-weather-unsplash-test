@@ -17,6 +17,6 @@ export async function getCityImage(
     }
   );
   const json = await resp.json();
-  console.log(json);
+  // console.log(json);
   return json;
 }
