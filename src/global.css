@@ -1,0 +1,81 @@
+/**
+ * WHAT IS THIS FILE?
+ *
+ * Globally applied styles. No matter which components are in the page or matching route,
+ * the styles in here will be applied to the Document, without any sort of CSS scoping.
+ *
+ */
+
+:root {
+  --qwik-dark-blue: #006ce9;
+  --qwik-light-blue: #18b6f6;
+  --qwik-light-purple: #ac7ff4;
+  --qwik-dark-purple: #713fc2;
+}
+
+body {
+  background-color: #fafafa;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    sans-serif;
+  padding: 20px 20px 40px 20px;
+}
+
+main {
+  max-width: 760px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 0px 130px -50px var(--qwik-light-purple);
+  overflow: hidden;
+}
+
+.weather {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.weather input[type="text"] {
+  border: none;
+  background-color: #f2f2f2;
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin-right: 8px;
+  font-size: 16px;
+  width: 200px;
+}
+
+.weather button {
+  border: none;
+  background-color: #4caf50;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.weather button:hover {
+  background-color: #3e8e41;
+}
+
+.weather .error {
+  color: red;
+  margin-bottom: 16px;
+}
+
+.weather-header {
+  display: flex;
+}
+
+.weather-city {
+  max-width: 300px;
+}
+
+.weather-icon {
+  width: 300px;
+}
