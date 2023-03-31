@@ -1,20 +1,10 @@
-export async function getWeather(
-  cityName: string,
-  controller?: AbortController
-): Promise<string[]> {
-  //   console.log(
-  //     "FETCH",
-  //     `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${
-  //       import.meta.env.VITE_WEATHERAPP
-  //     }&units=metric`
-  //   );
+import { WeatherDataProps } from "~/routes/[city]";
+
+export async function getWeather(cityName: string): Promise<WeatherDataProps> {
   const resp = await fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${
       import.meta.env.VITE_WEATHERAPP
-    }&units=metric`,
-    {
-      signal: controller?.signal,
-    }
+    }&units=metric`
   );
   const json = await resp.json();
   //   console.log(json);

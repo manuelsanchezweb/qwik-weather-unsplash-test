@@ -8,7 +8,9 @@ import {
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { getCityImage } from "~/api/getCityImage";
 import { getWeather } from "~/api/getWeather";
+import AppWrapper from "~/components/app-wrapper";
 import { WiSwitcher } from "~/components/icons/wi-switcher";
+import Navigation from "~/components/navigation";
 
 interface WeatherDataProps {
   name: string;
@@ -38,7 +40,8 @@ export default component$(() => {
   //   const env = import.meta.env;
   //   console.log(env);
   // });
-  const city = useSignal("Barcelona");
+  const city = useSignal("Granada");
+
   const newCity = useSignal("");
 
   const weatherData = useResource$<any>(({ track, cleanup }) => {
@@ -47,7 +50,7 @@ export default component$(() => {
     track(() => city.value);
     // Fetch the data and return the promises.
 
-    return getWeather(city.value, controller);
+    return getWeather(city.value);
   });
 
   const imageData = useResource$<any>(({ track, cleanup }) => {
@@ -56,7 +59,7 @@ export default component$(() => {
     track(() => city.value);
     // Fetch the data and return the promises.
 
-    return getCityImage(city.value, controller);
+    return getCityImage(city.value);
   });
 
   const handleSearch = $(() => {
@@ -64,18 +67,11 @@ export default component$(() => {
   });
 
   return (
-    <div>
-      <input
-        type="text"
-        name="city"
-        placeholder={city.value}
-        value={newCity.value}
-        onInput$={(ev) =>
-          (newCity.value = (ev.target as HTMLInputElement).value)
-        }
-        // onBlur$={(ev) => (city.value = (ev.target as HTMLInputElement).value)}
-      />
-      <button onClick$={() => handleSearch()}>Search</button>
+    <AppWrapper>
+      <Navigation />
+      <h1>
+        The weather in <span>{city.value}</span>
+      </h1>
 
       <Resource
         value={weatherData}
@@ -83,40 +79,49 @@ export default component$(() => {
         onRejected={(error) => <>Error: {error.message}</>}
         onResolved={(weather: WeatherDataProps) => {
           return (
-            <div>
-              <div class="weather-header">
-                <h2>
-                  {weather.name}, {weather.sys.country}
-                </h2>
-                <div class="weather-icon">
-                  <WiSwitcher code={weather.weather[0].icon} />
+            <div class="weather">
+              <div class="weather__current">
+                <div class="weather__current__temperature">
+                  {Math.round(weather.main.temp)}°C
                 </div>
 
-                <div class="weather-info">
-                  <div class="weather-temp">
-                    <span class="temp">{Math.round(weather.main.temp)}</span>
-                    <span class="unit">°C</span>
+                <WiSwitcher code={weather.weather[0].icon} />
+
+                <div>{weather.weather[0].description}</div>
+              </div>
+              <div class="weather__search">
+                <input
+                  type="text"
+                  name="city"
+                  placeholder={city.value}
+                  value={newCity.value}
+                  onInput$={(ev) =>
+                    (newCity.value = (ev.target as HTMLInputElement).value)
+                  }
+                  // onBlur$={(ev) => (city.value = (ev.target as HTMLInputElement).value)}
+                />
+                <button class="btn" onClick$={() => handleSearch()}>
+                  Search
+                </button>
+              </div>
+
+              <div class="weather__extra">
+                <div class="weather__extra__detail">
+                  <div class="weather__extra__detail__label">Feels like</div>
+                  <div class="weather__extra__detail__value">
+                    {Math.round(weather.main.feels_like)}°C
                   </div>
-                  <div class="weather-description">
-                    {weather.weather[0].description}
+                </div>
+                <div class="weather__extra__detail">
+                  <div class="weather__extra__detail__label">Humidity</div>
+                  <div class="weather__extra__detail__value">
+                    {weather.main.humidity}%
                   </div>
-                  <div class="weather-details">
-                    <div class="weather-detail">
-                      <span class="label">Feels like</span>
-                      <span class="value">
-                        {Math.round(weather.main.feels_like)} °C
-                      </span>
-                    </div>
-                    <div class="weather-detail">
-                      <span class="label">Humidity</span>
-                      <span class="value">{weather.main.humidity}%</span>
-                    </div>
-                    <div class="weather-detail">
-                      <span class="label">Wind</span>
-                      <span class="value">
-                        {Math.round(weather.wind.speed)} km/h
-                      </span>
-                    </div>
+                </div>
+                <div class="weather__extra__detail">
+                  <div class="weather__extra__detail__label">Wind</div>
+                  <div class="weather__extra__detail__value">
+                    {Math.round(weather.wind.speed)} km/h
                   </div>
                 </div>
               </div>
@@ -132,9 +137,11 @@ export default component$(() => {
         onResolved={(image) => {
           return (
             <figure>
-              <img class="weather-city" src={image.urls.raw} alt="" />
+              <picture>
+                <img class="weather--city" src={image.urls.raw} alt="" />
+              </picture>
               <figcaption>
-                copyright from...{" "}
+                Copyright from{" "}
                 <a target="_blank" href={image.user.social.portfolio_url}>
                   {image.user.username}
                 </a>
@@ -143,12 +150,12 @@ export default component$(() => {
           );
         }}
       />
-    </div>
+    </AppWrapper>
   );
 });
 
 export const head: DocumentHead = {
-  title: "☀️ Aplicación del tiempo con Qwik",
+  title: "Aplicación del tiempo con Qwik",
   meta: [
     {
       name: "description",
