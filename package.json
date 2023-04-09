@@ -1,6 +1,6 @@
 {
-  "name": "my-qwik-basic-starter",
-  "description": "App with Routing built-in (recommended)",
+  "name": "weather-app-qwik",
+  "description": "A cool app to get the time from your favorite cities!",
   "engines": {
     "node": ">=15.0.0"
   },
@@ -22,25 +22,25 @@
     "qwik": "qwik"
   },
   "devDependencies": {
-    "@builder.io/qwik": "0.18.1",
-    "@builder.io/qwik-city": "0.2.1",
-    "@types/eslint": "8.21.0",
-    "@types/node": "^18.13.0",
+    "@builder.io/qwik": "0.101.0",
+    "@builder.io/qwik-city": "0.101.0",
+    "@types/eslint": "8.37.0",
+    "@types/node": "^18.15.11",
     "@types/node-fetch": "latest",
-    "@typescript-eslint/eslint-plugin": "5.51.0",
-    "@typescript-eslint/parser": "5.51.0",
-    "autoprefixer": "10.4.11",
-    "eslint": "8.33.0",
-    "eslint-plugin-qwik": "0.18.1",
-    "netlify-cli": "^12.0.11",
-    "node-fetch": "3.3.0",
-    "postcss": "^8.4.16",
+    "@typescript-eslint/eslint-plugin": "5.57.1",
+    "@typescript-eslint/parser": "5.57.1",
+    "autoprefixer": "10.4.14",
+    "eslint": "8.38.0",
+    "eslint-plugin-qwik": "0.101.0",
+    "netlify-cli": "^13.2.2",
+    "node-fetch": "3.3.1",
+    "postcss": "^8.4.21",
     "postcss-nested": "^6.0.1",
-    "postcss-preset-env": "^8.0.1",
-    "prettier": "2.8.4",
-    "typescript": "4.9.5",
-    "undici": "5.18.0",
-    "vite": "4.1.1",
-    "vite-tsconfig-paths": "3.5.0"
+    "postcss-preset-env": "^8.3.0",
+    "prettier": "2.8.7",
+    "typescript": "5.0.4",
+    "undici": "5.21.2",
+    "vite": "4.2.1",
+    "vite-tsconfig-paths": "4.0.8"
   }
 }

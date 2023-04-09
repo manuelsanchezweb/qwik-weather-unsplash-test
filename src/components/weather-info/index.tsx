@@ -26,12 +26,16 @@ export const WeatherInfo = component$(({ city }: { city: Signal<string> }) => {
     if (newCity.value.length > 0) city.value = newCity.value;
   });
 
+  // This is not going to work but onResolved
+  console.log(weatherData.value);
+
   return (
     <Resource
       value={weatherData}
       onPending={() => <>Cargando...</>}
       onRejected={(error) => <>Error: {error.message}</>}
       onResolved={(weather: WeatherDataProps) => {
+        // console.log(weather);
         return (
           <div class="weather">
             <div class="weather__current">
