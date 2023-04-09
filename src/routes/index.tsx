@@ -11,25 +11,7 @@ import { getWeather } from "~/api/getWeather";
 import AppWrapper from "~/components/app-wrapper";
 import { WiSwitcher } from "~/components/icons/wi-switcher";
 import Navigation from "~/components/navigation";
-
-interface WeatherDataProps {
-  name: string;
-  sys: {
-    country: string;
-  };
-  weather: {
-    description: string;
-    icon: string;
-  }[];
-  main: {
-    temp: number;
-    feels_like: number;
-    humidity: number;
-  };
-  wind: {
-    speed: number;
-  };
-}
+import { CityProps, WeatherDataProps } from "~/types/types";
 
 export default component$(() => {
   // So we are reading from the server in SSR mode and SSR true
@@ -44,7 +26,7 @@ export default component$(() => {
 
   const newCity = useSignal("");
 
-  const weatherData = useResource$<any>(({ track, cleanup }) => {
+  const weatherData = useResource$<WeatherDataProps>(({ track, cleanup }) => {
     const controller = new AbortController();
     cleanup(() => controller.abort());
     track(() => city.value);
@@ -53,7 +35,7 @@ export default component$(() => {
     return getWeather(city.value);
   });
 
-  const imageData = useResource$<any>(({ track, cleanup }) => {
+  const cityImageData = useResource$<CityProps>(({ track, cleanup }) => {
     const controller = new AbortController();
     cleanup(() => controller.abort());
     track(() => city.value);
@@ -131,19 +113,19 @@ export default component$(() => {
       />
 
       <Resource
-        value={imageData}
+        value={cityImageData}
         onPending={() => <></>}
         onRejected={(error) => <>Error: {error.message}</>}
-        onResolved={(image) => {
+        onResolved={(city) => {
           return (
             <figure>
               <picture>
-                <img class="weather--city" src={image.urls.raw} alt="" />
+                <img class="weather--city" src={city.urls.raw} alt="" />
               </picture>
               <figcaption>
                 Copyright from{" "}
-                <a target="_blank" href={image.user.social.portfolio_url}>
-                  {image.user.username}
+                <a target="_blank" href={city.user.social.portfolio_url}>
+                  {city.user.username}
                 </a>
               </figcaption>
             </figure>

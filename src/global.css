@@ -133,7 +133,7 @@ figure figcaption {
 
 .weather__current {
   grid-area: current;
-  background: var(--color-bg-lighter:);
+  background: var(--color-bg-lighter);
   box-shadow: var(--shadow);
   padding: 13px 30px;
   display: flex;

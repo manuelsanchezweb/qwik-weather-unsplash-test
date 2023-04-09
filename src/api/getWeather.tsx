@@ -1,4 +1,4 @@
-import { WeatherDataProps } from "~/routes/[city]";
+import { WeatherDataProps } from "~/types/types";
 
 export async function getWeather(cityName: string): Promise<WeatherDataProps> {
   const resp = await fetch(
