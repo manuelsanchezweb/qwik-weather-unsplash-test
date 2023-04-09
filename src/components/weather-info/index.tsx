@@ -27,7 +27,7 @@ export const WeatherInfo = component$(({ city }: { city: Signal<string> }) => {
   });
 
   // This is not going to work but onResolved
-  console.log(weatherData.value);
+  // console.log(weatherData.value);
 
   return (
     <Resource
