@@ -1,17 +1,9 @@
-import {
-  $,
-  component$,
-  Resource,
-  useResource$,
-  useSignal,
-} from "@builder.io/qwik";
+import { component$, useSignal } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
-import { getCityImage } from "~/api/getCityImage";
-import { getWeather } from "~/api/getWeather";
 import AppWrapper from "~/components/app-wrapper";
-import { WiSwitcher } from "~/components/icons/wi-switcher";
+import { CityInfo } from "~/components/city-info";
 import Navigation from "~/components/navigation";
-import { CityProps, WeatherDataProps } from "~/types/types";
+import { WeatherInfo } from "~/components/weather-info";
 
 export default component$(() => {
   // So we are reading from the server in SSR mode and SSR true
@@ -24,30 +16,6 @@ export default component$(() => {
   // });
   const city = useSignal("Granada");
 
-  const newCity = useSignal("");
-
-  const weatherData = useResource$<WeatherDataProps>(({ track, cleanup }) => {
-    const controller = new AbortController();
-    cleanup(() => controller.abort());
-    track(() => city.value);
-    // Fetch the data and return the promises.
-
-    return getWeather(city.value);
-  });
-
-  const cityImageData = useResource$<CityProps>(({ track, cleanup }) => {
-    const controller = new AbortController();
-    cleanup(() => controller.abort());
-    track(() => city.value);
-    // Fetch the data and return the promises.
-
-    return getCityImage(city.value);
-  });
-
-  const handleSearch = $(() => {
-    if (newCity.value.length > 0) city.value = newCity.value;
-  });
-
   return (
     <AppWrapper>
       <Navigation />
@@ -55,83 +23,8 @@ export default component$(() => {
         The weather in <span>{city.value}</span>
       </h1>
 
-      <Resource
-        value={weatherData}
-        onPending={() => <>Cargando...</>}
-        onRejected={(error) => <>Error: {error.message}</>}
-        onResolved={(weather: WeatherDataProps) => {
-          return (
-            <div class="weather">
-              <div class="weather__current">
-                <div class="weather__current__temperature">
-                  {Math.round(weather.main.temp)}°C
-                </div>
-
-                <WiSwitcher code={weather.weather[0].icon} />
-
-                <div>{weather.weather[0].description}</div>
-              </div>
-              <div class="weather__search">
-                <input
-                  type="text"
-                  name="city"
-                  placeholder={city.value}
-                  value={newCity.value}
-                  onInput$={(ev) =>
-                    (newCity.value = (ev.target as HTMLInputElement).value)
-                  }
-                  // onBlur$={(ev) => (city.value = (ev.target as HTMLInputElement).value)}
-                />
-                <button class="btn" onClick$={() => handleSearch()}>
-                  Search
-                </button>
-              </div>
-
-              <div class="weather__extra">
-                <div class="weather__extra__detail">
-                  <div class="weather__extra__detail__label">Feels like</div>
-                  <div class="weather__extra__detail__value">
-                    {Math.round(weather.main.feels_like)}°C
-                  </div>
-                </div>
-                <div class="weather__extra__detail">
-                  <div class="weather__extra__detail__label">Humidity</div>
-                  <div class="weather__extra__detail__value">
-                    {weather.main.humidity}%
-                  </div>
-                </div>
-                <div class="weather__extra__detail">
-                  <div class="weather__extra__detail__label">Wind</div>
-                  <div class="weather__extra__detail__value">
-                    {Math.round(weather.wind.speed)} km/h
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        }}
-      />
-
-      <Resource
-        value={cityImageData}
-        onPending={() => <></>}
-        onRejected={(error) => <>Error: {error.message}</>}
-        onResolved={(city) => {
-          return (
-            <figure>
-              <picture>
-                <img class="weather--city" src={city.urls.raw} alt="" />
-              </picture>
-              <figcaption>
-                Copyright from{" "}
-                <a target="_blank" href={city.user.social.portfolio_url}>
-                  {city.user.username}
-                </a>
-              </figcaption>
-            </figure>
-          );
-        }}
-      />
+      <WeatherInfo city={city} />
+      <CityInfo city={city} />
     </AppWrapper>
   );
 });
