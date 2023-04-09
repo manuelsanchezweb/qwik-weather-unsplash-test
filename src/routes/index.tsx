@@ -182,7 +182,8 @@ export const head: DocumentHead = {
     },
     {
       property: "og:image",
-      content: "https://source.unsplash.com/random/800x600", // replace with actual image URL from Unsplash
+      content:
+        "https://qwik-weather-unsplash-testchen.netlify.app/thumbnail.png", // replace with actual image URL from Unsplash
     },
     {
       property: "og:url",
@@ -207,7 +208,8 @@ export const head: DocumentHead = {
     },
     {
       name: "twitter:image",
-      content: "https://source.unsplash.com/random/800x600", // replace with actual image URL from Unsplash
+      content:
+        "https://qwik-weather-unsplash-testchen.netlify.app/thumbnail.png", // replace with actual image URL from Unsplash
     },
   ],
 };
