@@ -55,6 +55,7 @@ figure {
   width: 100%;
   position: relative;
   height: 175px;
+  margin: 20px 0;
 }
 
 figure img {
@@ -101,6 +102,10 @@ figure figcaption {
 }
 
 @media only screen and (min-width: 768px) {
+  figure {
+    margin: 0;
+  }
+  
   figure figcaption {
     text-align: right;
   }
